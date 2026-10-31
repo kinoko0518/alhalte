@@ -1,5 +1,7 @@
 pub mod encrypted;
 
+use std::ops::Deref;
+
 use aes_gcm_siv::{
     Aes256GcmSiv, Key, KeyInit, Nonce,
     aead::{Aead, Generate},
@@ -21,21 +23,30 @@ pub enum CannerError {
 }
 
 const LABEL_BYTELEN: usize = 32;
+const WRAPPED_KEY_LEN: usize = 32 + 28;
 
 type Label = [u8; LABEL_BYTELEN];
 type RoomKey = Key<Aes256GcmSiv>;
 
 /// RoomKeyで暗号化された収束鍵。先頭12byteはNonce。
-pub struct WrappedKey(pub [u8; 32 + 28]);
+pub struct WrappedKey(pub [u8; WRAPPED_KEY_LEN]);
 
 impl TryFrom<Vec<u8>> for WrappedKey {
     type Error = String;
 
     fn try_from(vec: Vec<u8>) -> Result<Self, Self::Error> {
-        let arr: [u8; 60] = vec
+        let arr: [u8; WRAPPED_KEY_LEN] = vec
             .try_into()
-            .map_err(|v: Vec<u8>| format!("Expected 60 bytes, got {}", v.len()))?;
+            .map_err(|v: Vec<u8>| format!("Expected {} bytes, got {}", WRAPPED_KEY_LEN, v.len()))?;
         Ok(Self(arr))
+    }
+}
+
+impl Deref for WrappedKey {
+    type Target = [u8];
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
 }
 
