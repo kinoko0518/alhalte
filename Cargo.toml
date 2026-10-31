@@ -16,3 +16,6 @@ sqlx = { version = "0.9.0", features = [
     "macros",
     "uuid"
 ] }
+hex = "0.4.3"
+toml = "1.1.8"
+const_format = "0.2.37"
