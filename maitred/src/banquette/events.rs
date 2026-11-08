@@ -1,6 +1,6 @@
 use canner::{Tin, encrypted::Encrypted};
 
-use crate::banquette::Head;
+use crate::banquette::log::Head;
 
 pub enum Write {
     AppendLog(Encrypted),
