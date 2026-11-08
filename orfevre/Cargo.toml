@@ -1,0 +1,10 @@
+[package]
+name = "orfevre"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+padme-padding.workspace = true
+aes-gcm-siv.workspace = true
+blake3.workspace = true
+toml.workspace = true
