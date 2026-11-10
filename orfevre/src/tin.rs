@@ -44,7 +44,8 @@ impl Tin {
     fn mimetype_len(bin: &[u8]) -> Result<usize, TinError> {
         bin.first_chunk::<MIMETYPE_WIDTH>()
             .ok_or(TinError::NotEnoughBytesForMimetypeWidth)
-            .map(|x| (0..x.len()).fold(0 as MimetypeLen, |acc, y| acc | (x[y] as u32) << y))
+            .copied()
+            .map(MimetypeLen::from_le_bytes)
             .map(|x| x as usize)
     }
 

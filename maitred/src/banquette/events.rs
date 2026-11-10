@@ -1,5 +1,3 @@
-use canner::{Tin, encrypted::Encrypted};
-
 use crate::banquette::log::Head;
 
 pub enum Write {

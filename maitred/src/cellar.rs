@@ -3,7 +3,6 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 
-use canner::{Tin, TinID, WrappedKey};
 use sqlx::{SqlitePool, query, query_as};
 use tokio::sync::{mpsc, oneshot};
 use uuid::Uuid;
